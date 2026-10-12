@@ -6,13 +6,21 @@ InterviewIQ is a company-focused interview preparation app. Candidates can brows
 
 Requirements: Node.js 20+ and a MongoDB database (local or Atlas).
 
+Before starting the server, create `server/.env` and set `MONGODB_URI` to your database connection string. For a local MongoDB instance:
+
+```dotenv
+MONGODB_URI=mongodb://127.0.0.1:27017/interviewiq
+```
+
+For MongoDB Atlas, use the connection string from **Atlas → Connect → Drivers** and replace its username, password, and database placeholders. If the password contains reserved URL characters, percent-encode them. Add the server's network address to the Atlas IP access list and grant the database user access to the target database. Keep `server/.env` private and never commit credentials. The server validates `MONGODB_URI` at startup, connects through Mongoose, and seeds the starter questions when the database is empty.
+
 ```powershell
 cd server
 npm install
 npm run dev
 ```
 
-Open [http://localhost:5000](http://localhost:5000). The server serves both the web app and API. It connects to MongoDB on startup and inserts the original starter question set once. Existing `server/.env` MongoDB and Gemini settings are used; keep that file private.
+Open [http://localhost:5000](http://localhost:5000). The server serves both the web app and API. Existing Gemini settings in `server/.env` are also used.
 
 Add a strong random `JWT_SECRET` to `server/.env` for stable sessions and production use. The AI practice builder offers both the configured Gemini model and hosted Gemma 4 (`gemma-4-26b-a4b-it`) through the existing Google AI SDK and Gemini API key. To override the Gemma model, add:
 
