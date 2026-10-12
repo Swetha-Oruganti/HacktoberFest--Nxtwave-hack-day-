@@ -17,7 +17,7 @@ app.use(cors({
   credentials: true,
 }));
 
-app.use(express.json({ limit: "200kb" }));
+app.use(express.json({ limit: "5mb" }));
 app.use(express.static(fileURLToPath(new URL("../public", import.meta.url))));
 
 app.get("/api/health", (req, res) => {

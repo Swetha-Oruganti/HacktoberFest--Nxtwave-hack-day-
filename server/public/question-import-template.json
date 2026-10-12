@@ -1,0 +1,27 @@
+{
+  "source": {
+    "platform": "Licensed dataset name",
+    "sourceUrl": "https://example.org/dataset",
+    "termsUrl": "https://example.org/terms"
+  },
+  "rights": {
+    "licenseName": "",
+    "licenseUrl": "",
+    "permissionReference": ""
+  },
+  "questions": [
+    {
+      "title": "Example problem title",
+      "prompt": "A complete problem statement of at least 30 characters, including constraints when available.",
+      "companyTags": ["Google", "Amazon"],
+      "sourceUrl": "https://example.org/problems/example",
+      "sourceAskedAt": "",
+      "sourcePostedAt": "",
+      "difficulty": "Medium",
+      "topic": "Arrays",
+      "round": "Coding",
+      "examples": [{ "input": "...", "output": "..." }],
+      "hints": ["First hint"]
+    }
+  ]
+}
