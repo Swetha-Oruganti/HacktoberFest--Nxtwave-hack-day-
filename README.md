@@ -4,15 +4,27 @@ InterviewIQ is a company-focused interview preparation app. Candidates can brows
 
 ## Run locally
 
-Requirements: Node.js 20+ and a MongoDB database (local or Atlas).
+Requirements: Node.js 20+ and a MongoDB Atlas cluster.
 
-Before starting the server, create `server/.env` and set `MONGODB_URI` to your database connection string. For a local MongoDB instance:
+### Connect MongoDB Atlas
 
-```dotenv
-MONGODB_URI=mongodb://127.0.0.1:27017/interviewiq
-```
+1. Create a project and cluster in [MongoDB Atlas](https://www.mongodb.com/atlas/database).
+2. In **Database Access**, create a database user and save its username and password. This is separate from your Atlas website login.
+3. In **Network Access**, allow the IP address of the machine running InterviewIQ to connect. For local development, add your current IP address.
+4. On the cluster, choose **Connect → Drivers**, select Node.js, and copy the connection string. It looks like:
 
-For MongoDB Atlas, use the connection string from **Atlas → Connect → Drivers** and replace its username, password, and database placeholders. If the password contains reserved URL characters, percent-encode them. Add the server's network address to the Atlas IP access list and grant the database user access to the target database. Keep `server/.env` private and never commit credentials. The server validates `MONGODB_URI` at startup, connects through Mongoose, and seeds the starter questions when the database is empty.
+   ```text
+   mongodb+srv://<db_username>:<db_password>@<cluster-host>/<database>?retryWrites=true&w=majority&appName=InterviewIQ
+   ```
+
+5. Replace the placeholders with the database user credentials, Atlas cluster host, and database name (for example, `interviewiq`). Percent-encode reserved characters in the password.
+6. Create `server/.env` and set the complete Atlas URI as `MONGODB_URI`:
+
+   ```dotenv
+   MONGODB_URI=mongodb+srv://<db_username>:<db_password>@<cluster-host>/interviewiq?retryWrites=true&w=majority&appName=InterviewIQ
+   ```
+
+Keep `server/.env` private and never commit credentials. The server requires `MONGODB_URI`, connects to Atlas through Mongoose on startup, and seeds the starter questions when the database is empty.
 
 ```powershell
 cd server
