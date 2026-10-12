@@ -40,6 +40,7 @@ The Gemini key must have access to the selected model. If no AI key is configure
 - Email and password registration/login, with scrypt password hashing and expiring signed bearer tokens.
 - Authenticated generation and attempt tracking; user and admin route authorization.
 - Company, difficulty, topic, and text search over original starter and generated questions.
+- Persistent light and dark themes, initialized from the saved preference or the operating system setting; the Monaco editor follows the active theme.
 - Authenticated, live company research using Gemini Google Search grounding. The UI links to the sources and labels candidate reports as unverified and time-sensitive; findings are not copied into the database.
 - Interview experience submissions, public display after review, and an admin moderation queue.
 - Admin JSON dataset import with company multi-tags, source/license attribution, exact duplicate merging, and near-duplicate review before publication.
