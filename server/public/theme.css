@@ -1,0 +1,77 @@
+:root {
+  --bg: #080b12;
+  --panel: #0d121c;
+  --panel2: #121a27;
+  --line: #202a39;
+  --muted: #8491a4;
+  --text: #edf4ff;
+  --purple: #56a6ff;
+  --purple-bright: #82beff;
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 68% -18%, rgba(24, 93, 166, .18), transparent 42rem),
+    radial-gradient(ellipse at 5% 55%, rgba(15, 52, 91, .09), transparent 34rem),
+    var(--bg);
+  color: var(--text);
+}
+
+.sidebar { background: rgba(9, 13, 21, .96); border-right-color: #1c2634; }
+.brand-glyph, .brand-name span { color: #56a6ff; }
+.brand-glyph span { color: #83d9ff; }
+.workspace-label { color: #6e7d92; }
+.nav-item { color: #9ba9bc; }
+.nav-item.active { background: linear-gradient(100deg, rgba(39, 104, 174, .23), rgba(24, 48, 77, .2)); color: #e0efff; box-shadow: inset 2px 0 #59aaff; }
+.nav-item.active .nav-icon, .nav-icon { color: #73b8ff; }
+.sidebar-rule { background: #1d2938; }
+.target-item:hover, .target-item.selected { background: #141e2b; color: #e8f3ff; }
+.company-dot { background: #162337; }
+.pro-card { border-color: #1c446c; background: linear-gradient(145deg, #102238, #0d141e 78%); }
+.pro-spark, .pro-link, .text-button, .link-button, .breadcrumbs b { color: #79b9ff; }
+.topbar { border-bottom-color: #1c2634; background: rgba(8, 11, 18, .65); }
+.icon-button { border-color: #2a3b50; color: #a7bdd5; }
+.icon-button:hover { border-color: #4e9ce9; color: #8bc5ff; }
+.small-avatar, .avatar { background: linear-gradient(140deg, #1f5c9b, #143356); color: #e5f3ff; }
+.welcome-dot { background: #65d6ad; box-shadow: 0 0 12px rgba(101, 214, 173, .62); }
+.hero-title em { color: #66b4ff; }
+.button { border-color: #2a3748; background: #121a25; color: #e4edf8; }
+.button:hover { border-color: #4d82b6; background: #172537; }
+.button.primary { border-color: #3b9cff; background: linear-gradient(115deg, #3289e8, #43adff); color: #04111f; box-shadow: 0 5px 18px rgba(47, 143, 231, .18); }
+.button.primary:hover { border-color: #70bdff; background: linear-gradient(115deg, #4a9df0, #65baff); }
+.stat-card, .company-card, .panel, .question-card, .experience-card, .problem-panel, .code-panel, .company-filter {
+  background: linear-gradient(145deg, rgba(17, 25, 37, .96), rgba(12, 17, 26, .98));
+  border-color: #202c3b;
+}
+.stat-card:hover, .panel:hover { border-color: #2b4058; }
+.stat-icon, .stat-num { color: #6eb8ff; }
+.company-card:hover, .question-card:hover { border-color: #3e80bb; background: linear-gradient(145deg, #142235, #0e1723); }
+.company-mark { background: #152235; }
+.company-arrow { color: #6faee9; }
+.section-heading h2, .panel-title, .page-title, .question-card h3, .experience-header h3 { color: #eef5ff; }
+.tag { background: #172131; color: #b5c5d9; }
+.company-filter button:hover, .company-filter button.selected { background: #15283d; color: #a8d4ff; }
+.focus-number { border-color: #27527b; color: #79bdff; background: rgba(35, 98, 154, .12); }
+.ai-pill { border-color: #28547a; background: #10243a; color: #8dcaff; }
+.eyebrow { color: #6eb7ff; }
+.breadcrumbs { color: #8493a7; }
+.crumb-slash { color: #3c4b5c; }
+.editor-toolbar select, .select-field, .search-box input { border-color: #2a394b; background: #101823; }
+.search-box input:focus, .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: #4b9ce8; box-shadow: 0 0 0 3px rgba(54, 148, 231, .12); }
+.editor-container, .editor-output { background: #0b1018; }
+.editor-output { border-top-color: #202c39; }
+.problem-detail, .editor-toolbar, .editor-actions { border-color: #202c39; }
+.modal { background: #101722; border-color: #2a394b; box-shadow: 0 24px 90px rgba(0, 0, 0, .65), 0 0 0 1px rgba(79, 164, 242, .05); }
+.modal-backdrop { background: rgba(2, 6, 12, .78); backdrop-filter: blur(5px); }
+.form-field input, .form-field select, .form-field textarea { background: #0a1018; border-color: #2c3a4b; }
+.round-editor { border-color: #2b3848; }
+.toast { background: #142337; border-color: #2d4e70; color: #e8f4ff; }
+.back-button { border-color: #2b3a4c; background: #121b27; }
+.back-button:hover { border-color: #4c8ac2; }
+.skeleton { background: linear-gradient(90deg, #121a26, #192536, #121a26); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .company-card, .question-card, .button, .nav-item { transition: transform .16s ease, border-color .16s ease, background .16s ease, color .16s ease; }
+  .company-card:hover { transform: translateY(-2px); }
+}

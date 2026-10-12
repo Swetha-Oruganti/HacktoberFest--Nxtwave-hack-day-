@@ -2,26 +2,28 @@
 import "dotenv/config";
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.GEMINI_API_KEY;
+const ai = process.env.GEMINI_API_KEY ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }) : null;
 
-if (!apiKey) {
-  throw new Error("GEMINI_API_KEY is missing from .env");
+export function getAIStatus() {
+  const gemmaModel = process.env.GEMMA_MODEL || "gemma-4-26b-a4b-it";
+  return {
+    available: Boolean(ai),
+    provider: process.env.GEMINI_MODEL?.startsWith("gemma-") ? "Gemma" : "Gemini",
+    model: process.env.GEMINI_MODEL || "gemini-2.5-flash",
+    gemmaAvailable: Boolean(ai),
+    gemmaModel,
+  };
 }
 
-const ai = new GoogleGenAI({ apiKey });
-
-export async function generateAIText(prompt) {
-  const model = process.env.GEMINI_MODEL;
-
-  if (!model) {
-    throw new Error("GEMINI_MODEL is missing from .env");
-  }
+export async function generateAIText(prompt, { model = process.env.GEMINI_MODEL || "gemini-2.5-flash" } = {}) {
+  if (!ai) throw new Error("AI is not configured. Add GEMINI_API_KEY to server/.env.");
 
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const response = await ai.models.generateContent({
         model,
         contents: prompt,
+        config: { temperature: 0.7, maxOutputTokens: 4096 },
       });
 
       if (!response.text) {
