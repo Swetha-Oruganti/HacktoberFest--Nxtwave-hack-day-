@@ -29,6 +29,23 @@ const api = async (url, options = {}) => {
   return data;
 };
 function toast(message) { const el = $("#toast"); el.textContent = message; el.classList.add("show"); clearTimeout(toast.timer); toast.timer = setTimeout(() => el.classList.remove("show"), 3000); }
+function applyTheme(theme, persist = true) {
+  const active = theme === "light" ? "light" : "dark";
+  document.documentElement.dataset.theme = active;
+  if (persist) { try { localStorage.setItem("interviewiq_theme", active); } catch { /* The theme still applies for this session. */ } }
+  const button = $("#theme-toggle");
+  if (button) {
+    const next = active === "dark" ? "light" : "dark";
+    button.setAttribute("aria-label", `Switch to ${next} mode`);
+    button.setAttribute("title", `Switch to ${next} mode`);
+    button.setAttribute("aria-pressed", String(active === "light"));
+    button.querySelector(".theme-icon").textContent = active === "dark" ? "☼" : "☾";
+    button.querySelector(".theme-label").textContent = `${next[0].toUpperCase()}${next.slice(1)} mode`;
+  }
+  const themeColor = $("meta[name='theme-color']");
+  if (themeColor) themeColor.content = active === "light" ? "#f3f7fc" : "#080b12";
+  if (window.monaco?.editor) window.monaco.editor.setTheme(active === "light" ? "vs" : "vs-dark");
+}
 function setView(view) { document.querySelectorAll(".nav-item").forEach((n) => n.classList.toggle("active", n.dataset.view === view)); $("#crumb").textContent = ({ home: "Overview", questions: "Question bank", experiences: "Experiences", editor: "Practice" })[view] || "Overview"; if (view === "home") renderHome(); if (view === "questions") renderQuestions(); if (view === "experiences") renderExperiences(); }
 async function loadBase() {
   try {
@@ -252,7 +269,7 @@ function setupEditor() {
   const fallback = $("#code-editor"); const monacoUrl = "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs";
   fallback.value = starterFor($("#language").value);
   state.editorStarter = fallback.value;
-  const start = () => { if (!window.require) return; window.require.config({ paths: { vs: monacoUrl } }); window.require(["vs/editor/editor.main"], () => { if (!$("#editor-container")) return; state.editor = window.monaco.editor.create($("#editor-container"), { value: fallback.value, language: "javascript", theme: "vs-dark", automaticLayout: true, minimap: { enabled: false }, fontSize: 12, fontFamily: "DM Mono, monospace", scrollBeyondLastLine: false, padding: { top: 12 }, roundedSelection: false }); fallback.remove(); }); };
+  const start = () => { if (!window.require) return; window.require.config({ paths: { vs: monacoUrl } }); window.require(["vs/editor/editor.main"], () => { if (!$("#editor-container")) return; state.editor = window.monaco.editor.create($("#editor-container"), { value: fallback.value, language: "javascript", theme: document.documentElement.dataset.theme === "light" ? "vs" : "vs-dark", automaticLayout: true, minimap: { enabled: false }, fontSize: 12, fontFamily: "DM Mono, monospace", scrollBeyondLastLine: false, padding: { top: 12 }, roundedSelection: false }); fallback.remove(); }); };
   if (window.monaco) start(); else { const script = document.createElement("script"); script.src = `${monacoUrl}/loader.min.js`; script.onload = start; script.onerror = () => {}; document.head.append(script); }
 }
 function getCode() { return state.editor ? state.editor.getValue() : $("#code-editor")?.value || ""; }
@@ -299,5 +316,7 @@ $("#profile-button").addEventListener("click", () => state.user ? showProfileMen
 function showProfileMenu() { const actions = state.user ? `<button class="button small" id="profile-signout">Sign out</button>${state.user.role === "admin" ? `<button class="button small" id="admin-review">Review stories</button>` : ""}` : `<button class="button primary small" id="profile-login">Sign in / Create account</button>`; $("#modal-root").innerHTML = `<div class="modal-backdrop"><section class="modal"><button class="modal-close">×</button><div class="eyebrow">YOUR ACCOUNT</div><h2>${esc(state.user?.name || "Guest learner")}</h2><p>${esc(state.user?.email || "Practice without an account, or sign in to save your progress.")}</p><div class="modal-footer">${actions}</div></section></div>`; $(".modal-close").onclick = closeModal; $(".modal-backdrop").addEventListener("click", (e) => { if (e.target.classList.contains("modal-backdrop")) closeModal(); }); $("#profile-login")?.addEventListener("click", () => openAuth()); $("#profile-signout")?.addEventListener("click", () => { closeModal(); logout(); }); $("#admin-review")?.addEventListener("click", loadAdminQueue); }
 async function loadAdminQueue() { try { const { experiences } = await api("/api/admin/experiences"); $("#modal-root").innerHTML = `<div class="modal-backdrop"><section class="modal"><button class="modal-close">×</button><div class="eyebrow">MODERATION</div><h2>Pending stories</h2>${experiences.length ? experiences.map((e) => `<article class="experience-card"><b>${esc(e.company)} · ${esc(e.role)}</b><p>${esc(e.author?.name)} · ${e.rounds.length} rounds</p><div class="modal-footer"><button class="button small" data-review="rejected" data-id="${e._id}">Reject</button><button class="button primary small" data-review="approved" data-id="${e._id}">Approve</button></div></article>`).join("") : `<p>No stories are waiting for review.</p>`}</section></div>`; $(".modal-close").onclick = closeModal; document.querySelectorAll("[data-review]").forEach((b) => b.onclick = async () => { await api(`/api/admin/experiences/${b.dataset.id}`, { method: "PATCH", body: JSON.stringify({ status: b.dataset.review }) }); await loadAdminQueue(); await loadBase(); }); } catch (e) { toast(e.message); } }
 $("#help-button").addEventListener("click", () => toast("Choose a company, generate a practice set, then open any question to start the editor.")); $("#add-target").addEventListener("click", () => openGenerateModal());
+$("#theme-toggle").addEventListener("click", () => applyTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light"));
 document.querySelectorAll(".nav-item").forEach((b) => b.addEventListener("click", () => setView(b.dataset.view)));
+applyTheme(document.documentElement.dataset.theme, false);
 loadBase();

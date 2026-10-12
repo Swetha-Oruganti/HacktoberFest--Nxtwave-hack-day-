@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#101012"><meta name="description" content="Practice interview questions by company. Learn from real candidate experiences and build confidence with focused coding practice.">
+  <script>try{const saved=localStorage.getItem("interviewiq_theme");document.documentElement.dataset.theme=saved==="light"||saved==="dark"?saved:(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark")}catch{document.documentElement.dataset.theme="dark"}</script>
   <title>InterviewIQ — prepare with intent</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/theme.css">
 </head>
@@ -23,7 +24,7 @@
       </div>
     </aside>
     <main class="main-area">
-      <header class="topbar"><div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><b id="crumb">Overview</b></div><div class="top-actions"><span class="today-label" id="today-label"></span><button class="icon-button" id="help-button" aria-label="Help">?</button><button class="small-avatar" id="top-avatar">G</button></div></header>
+      <header class="topbar"><div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><b id="crumb">Overview</b></div><div class="top-actions"><span class="today-label" id="today-label"></span><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch to light mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><button class="icon-button" id="help-button" aria-label="Help">?</button><button class="small-avatar" id="top-avatar">G</button></div></header>
       <div id="page-content" class="page-content"></div>
     </main>
   </div>
